@@ -21,5 +21,4 @@ MongoClient.connect(url)
     app.listen(3000, () => console.log('Server started!'));
     wordsCollection = db.collection('words');
 })
-.then(result => arrWords = result)
 .catch(err => console.log(err.message));
