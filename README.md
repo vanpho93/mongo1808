@@ -1,5 +1,8 @@
 # mongo1808
 
+// table -> collection
+// record -> document
+
 Show all db ~ show dbs ~ db
 <br>
 Switch db ~ use dbname
