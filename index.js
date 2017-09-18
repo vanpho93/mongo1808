@@ -30,6 +30,12 @@ app.get('/remove/:id', (req, res) => {
     .catch(err => res.send(err.message));
 });
 
+app.get('/edit/:id', (req, res) => {
+    const { id } = req.params;
+    wordsCollection.findOne({ _id: ObjectId(id) })
+    .then(result => res.render('edit', { result }));
+});
+
 const url = 'mongodb://localhost:27017/shop';
 
 MongoClient.connect(url)
