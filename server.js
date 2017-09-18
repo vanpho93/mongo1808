@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Word = require('./Word');
 mongoose.Promise = global.Promise;
 
 const app = express();
@@ -7,7 +8,10 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.static('public'));
 
-app.get('/', (req, res) => res.render('home'));
+app.get('/', (req, res) => {
+    Word.find({})
+    .then(result => res.render('home', { arrWords: result }));
+});
 
 const uri = 'mongodb://localhost/shop';
 
