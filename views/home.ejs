@@ -17,6 +17,7 @@
         <% arrWords.forEach(e => { %>
             <h4><%= e.en %></h4>
             <p><%= e.vn %></p>
+            <a href="/remove/<%= e._id %>">Xoa</a>
         <% }); %>
     </body>
 </html>

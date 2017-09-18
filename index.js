@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const express = require('express');
 const parser = require('body-parser').urlencoded({ extended: false });
 
@@ -19,6 +19,13 @@ app.post('/add', parser, (req, res) => {
     const { vn, en } = req.body;
     console.log(vn, en);
     wordsCollection.insert({ vn, en })
+    .then(() => res.redirect('/'))
+    .catch(err => res.send(err.message));
+});
+
+app.get('/remove/:id', (req, res) => {
+    const { id } = req.params;
+    wordsCollection.remove({ _id: ObjectId(id) })
     .then(() => res.redirect('/'))
     .catch(err => res.send(err.message));
 });
