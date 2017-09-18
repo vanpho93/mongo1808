@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb');
 const express = require('express');
+const parser = require('body-parser').urlencoded({ extended: false });
 
 let wordsCollection;
 
@@ -11,6 +12,14 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     wordsCollection.find().toArray()
     .then(result => res.render('home', { arrWords: result }))
+    .catch(err => res.send(err.message));
+});
+
+app.post('/add', parser, (req, res) => {
+    const { vn, en } = req.body;
+    console.log(vn, en);
+    wordsCollection.insert({ vn, en })
+    .then(() => res.redirect('/'))
     .catch(err => res.send(err.message));
 });
 
