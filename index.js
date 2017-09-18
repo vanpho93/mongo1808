@@ -17,7 +17,6 @@ app.get('/', (req, res) => {
 
 app.post('/add', parser, (req, res) => {
     const { vn, en } = req.body;
-    console.log(vn, en);
     wordsCollection.insert({ vn, en })
     .then(() => res.redirect('/'))
     .catch(err => res.send(err.message));
@@ -33,7 +32,16 @@ app.get('/remove/:id', (req, res) => {
 app.get('/edit/:id', (req, res) => {
     const { id } = req.params;
     wordsCollection.findOne({ _id: ObjectId(id) })
-    .then(result => res.render('edit', { result }));
+    .then(result => res.render('edit', { result }))
+    .catch(err => res.send(err.message));
+});
+
+app.post('/edit/:id', parser, (req, res) => {
+    const { id } = req.params;
+    const { vn, en } = req.body;
+    wordsCollection.updateOne({ _id: ObjectId(id) }, { en, vn })
+    .then(() => res.redirect('/'))
+    .catch(err => res.send(err.message));
 });
 
 const url = 'mongodb://localhost:27017/shop';
